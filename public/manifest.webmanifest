@@ -1,0 +1,19 @@
+{
+  "name": "First Solve: learn the Rubik's cube",
+  "short_name": "First Solve",
+  "description": "Learn to solve the Rubik's Cube layer by layer. / Naucz się układać kostkę Rubika warstwa po warstwie.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1013",
+  "theme_color": "#0f1013",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "screenshots/narrow.png", "sizes": "824x1830", "type": "image/png", "form_factor": "narrow", "label": "Explore the cube course / Poznaj kurs układania kostki" },
+    { "src": "screenshots/wide.png", "sizes": "2400x1350", "type": "image/png", "form_factor": "wide", "label": "Choose a lesson / Wybierz lekcję" }
+  ]
+}

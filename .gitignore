@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Dependencies and test output
+node_modules/
+test-results/
+playwright-report/
+
+# Wrangler
+.wrangler/
+.dev.vars*
+
+# Legal audit working files
+.audyt-prawny/
