@@ -6,7 +6,7 @@
 npm install                       # dev tooling only: wrangler, @playwright/test, @axe-core/playwright, eslint
 npx playwright install chromium   # once, before the first e2e run
 npm start                         # wrangler dev on http://localhost:8787, production headers
-npm test                          # ESLint (eslint.config.mjs), then scripts/check.js: syntax, PL/EN keys, SHELL and manifest files, version
+npm test                          # ESLint (eslint.config.mjs), scripts/check.js (syntax, PL/EN keys, SHELL and manifest files, version), then unit tests (node --test test/*.test.js)
 npm run test:e2e                  # Playwright, desktop and mobile, against npm start; includes an axe scan and an offline run
 npm run deploy                    # npm test, then wrangler deploy
 ```
@@ -52,6 +52,11 @@ npm run deploy                    # npm test, then wrangler deploy
   strings, stickering, per-orbit masks and the autoplay-loop logic in `public/js/steps.js`, plus the
   player wiring (`configurePlayer`, the autoplay loop, the hero loop) in `public/js/app.js`, are
   verified against cubing.js's kpuzzle and must not be changed.
+- **Unit tests.** `test/steps.test.js` runs `public/js/steps.js` in Node against a small cube model
+  of its own (no cubing.js) and checks what each lesson says about the cube it shows: where a demo
+  starts, where it ends, that it ends on the next slide's cube. A new or changed slide needs a
+  matching assertion there. One test is marked `todo`: the two middle-layer inserter slides show
+  side centres a quarter turn off from the first layer (`BELT_MESS`).
 - **Languages.** English is the default, Polish the alternative. Copy lives in
   `public/js/i18n/en.js` and `public/js/i18n/pl.js`; change both and keep their keys in parity. The
   fallback text in `index.html` is English. Route slugs stay Polish (`#/krok/…`, `#/sciaga`) so

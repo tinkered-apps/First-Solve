@@ -25,7 +25,7 @@ export default [
   },
   { files: ['public/sw.js'], languageOptions: { globals: globals.serviceworker } },
 
-  { files: ['scripts/**', '*.js'], languageOptions: { sourceType: 'commonjs', globals: globals.node } },
+  { files: ['scripts/**', 'test/**', '*.js'], languageOptions: { sourceType: 'commonjs', globals: globals.node } },
   // Playwright specs run in Node and hand callbacks to the page.
   { files: ['e2e/**'], languageOptions: { sourceType: 'commonjs', globals: { ...globals.node, ...globals.browser } } },
 ];

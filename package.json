@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "wrangler dev --port 8787",
-    "test": "eslint . && node scripts/check.js",
+    "test": "eslint . && node scripts/check.js && node --test test/*.test.js",
     "test:e2e": "playwright test",
     "deploy": "npm test && wrangler deploy"
   },
