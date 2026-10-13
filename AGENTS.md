@@ -55,8 +55,7 @@ npm run deploy                    # npm test, then wrangler deploy
 - **Unit tests.** `test/steps.test.js` runs `public/js/steps.js` in Node against a small cube model
   of its own (no cubing.js) and checks what each lesson says about the cube it shows: where a demo
   starts, where it ends, that it ends on the next slide's cube. A new or changed slide needs a
-  matching assertion there. One test is marked `todo`: the two middle-layer inserter slides show
-  side centres a quarter turn off from the first layer (`BELT_MESS`).
+  matching assertion there.
 - **Languages.** English is the default, Polish the alternative. Copy lives in
   `public/js/i18n/en.js` and `public/js/i18n/pl.js`; change both and keep their keys in parity. The
   fallback text in `index.html` is English. Route slugs stay Polish (`#/krok/…`, `#/sciaga`) so

@@ -299,15 +299,22 @@ test("middle layer: each inserter keeps the first layer and seats its edge above
   }
 });
 
-/* Known defect, found by this test on 2026-10-13 and confirmed on the live site: the
-   two inserter demos add an E turn to their setup (BELT_MESS in steps.js), and E
-   carries the four side centres a quarter turn round. The cube on these slides
-   therefore shows a blue face with an orange centre, while the text tells the
-   learner to match the edge to the centres. Cube states are settled data
-   (AGENTS.md), so the fix is the author's call; until then this stays a todo. */
-test("middle layer: the centres on the inserter slides match the first layer", { todo: "BELT_MESS turns the centres" }, () => {
-  for (const k of Object.keys(MIDDLE_SEATS)) {
-    assert.ok(rowsMatchCenters(startOf(k), [-1]), `${k}: centres are off from the first layer`);
+/* Until 1.02 these two setups scrambled the belt with an E turn, which carries the
+   four side centres a quarter turn round: the cube showed a blue face with an orange
+   centre while the text said to match the edge to the centres. */
+test("middle layer: on the inserter slides the centres match the first layer and the edge matches the centres", () => {
+  for (const [k, at] of Object.entries(MIDDLE_SEATS)) {
+    const side = at[0] === 1 ? "R" : "L";
+    const start = startOf(k);
+    assert.ok(rowsMatchCenters(start, [-1]), `${k}: centres are off from the first layer`);
+    /* The edge waits on top, its front colour over the centre of the same colour (the upside-down T). */
+    assert.equal(colorAt(start, "F", [0, 1, 1]), center(start, "F"), `${k}: no T at the start`);
+    assert.equal(colorAt(start, "U", [0, 1, 1]), center(start, side), `${k}: the top colour does not name the side`);
+    const end = endOf(k);
+    assert.ok(rowsMatchCenters(end, [-1]), `${k}: the demo ends with centres off`);
+    assert.equal(colorAt(end, "F", at), center(end, "F"), `${k}: seated edge does not match the front centre`);
+    assert.equal(colorAt(end, side, at), center(end, side), `${k}: seated edge does not match the side centre`);
+    assert.ok(!rowsMatchCenters(end, [0]), `${k} ends with the whole belt solved, which hides that three edges remain`);
   }
 });
 

@@ -87,11 +87,15 @@ const xinv = (alg) => "x2 " + invertAlg(alg);
 const FIRST_LAYER_DONE = `${xinv(MID_R)} U2 ${invertAlg(MID_L)} U`;
 /* Scrambles the 3 belt slots the MID_R/MID_L inserter demos aren't
    currently filling, so those demos don't end with a fully-solved-looking
-   cube. E is the belt-only slice turn: it never touches a U or D piece,
-   so the first layer and the specific edge each demo carries stay exactly
-   as designed - kpuzzle-checked that the inserted edge still lands
-   correctly regardless of what E did to the other 3 belt slots first. */
-const BELT_MESS = "E";
+   cube. Each is two double-swaps ("X2 U2 X2 U2 X2" trades two top edges
+   and two belt edges) whose top-edge trades cancel, which leaves a pure
+   3-cycle of belt edges: no centre, corner, top or bottom piece moves, and
+   the slot the demo fills is not one of the three. A plain E turn would
+   scramble the belt too, but it carries the four side centres with it, and
+   the lesson tells the learner to match edges to those centres.
+   Checked in test/steps.test.js. */
+const BELT_MESS_R = "U L2 U2 L2 U2 L2 U' B2 U2 B2 U2 B2"; // cycles FL, BL, BR
+const BELT_MESS_L = "U' R2 U2 R2 U2 R2 U B2 U2 B2 U2 B2"; // cycles FR, BR, BL
 /* PCYC only re-cycles the 3 top corners (edges/centers/first-two-layers
    untouched, verified) - appended here so the "cross achieved" reveals
    never coincidentally leave the WHOLE cube solved-looking, which would
@@ -190,8 +194,8 @@ const steps = [
     slides: [
       { key: "middle-layer.1", alg: "", setup: FIRST_LAYER_DONE, stickering: "full" },
       { key: "middle-layer.2", alg: "", setup: xinv(MID_R), stickering: "full" },
-      { key: "middle-layer.3", alg: MID_R, setup: `${xinv(MID_R)} ${BELT_MESS}`, stickering: "full", chips: true, autoplay: true },
-      { key: "middle-layer.4", alg: MID_L, setup: `${xinv(MID_L)} ${BELT_MESS}`, stickering: "full", chips: true, autoplay: true },
+      { key: "middle-layer.3", alg: MID_R, setup: `${xinv(MID_R)} ${BELT_MESS_R}`, stickering: "full", chips: true, autoplay: true },
+      { key: "middle-layer.4", alg: MID_L, setup: `${xinv(MID_L)} ${BELT_MESS_L}`, stickering: "full", chips: true, autoplay: true },
       /* 5. a real edge stuck in the wrong belt slot, top all yellow (static recognition) */
       { key: "middle-layer.5", alg: "", setup: STUCK_MID_EDGE, stickering: "full" },
       /* 6. the same start, now autoplay the crowbar-eject */

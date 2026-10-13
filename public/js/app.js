@@ -6,7 +6,7 @@
   "use strict";
 
   // Version shown in the footer; CACHE in sw.js carries the same number (see AGENTS.md).
-  const APP_VERSION = "1.01";
+  const APP_VERSION = "1.02";
 
   const dicts = { pl: window.I18N_PL, en: window.I18N_EN };
   const steps = window.STEPS;
