@@ -427,6 +427,7 @@ body[data-view="home"] .brand-name { visibility: hidden; }
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  min-height: 24px; /* smallest comfortable touch target */
   color: inherit;
   text-decoration: none;
   text-underline-offset: 3px;

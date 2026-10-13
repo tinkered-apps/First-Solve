@@ -30,8 +30,13 @@ for (const k of Object.keys(en)) if (!(k in pl)) errors.push(`missing in PL: ${k
 
 const manifest = JSON.parse(read("manifest.webmanifest"));
 const shell = [...read("sw.js").matchAll(/^\s+"([^"]+)",?$/gm)].map((m) => m[1]);
+/* The host serves privacy.html at /privacy and redirects the .html form there.
+   A cached redirect cannot open a page offline, so SHELL lists the served URL. */
+for (const f of shell.filter((s) => s.endsWith(".html")))
+  errors.push(`sw.js SHELL lists ${f}: use the URL without .html ("./" for index.html)`);
 for (const f of [...manifest.icons.map((i) => i.src), ...shell.filter((s) => s !== "./")])
-  if (!fs.existsSync(path.join(root, f))) errors.push(`referenced file not found: ${f}`);
+  if (!fs.existsSync(path.join(root, f)) && !fs.existsSync(path.join(root, `${f}.html`)))
+    errors.push(`referenced file not found: ${f}`);
 
 const walk = (d) => fs.readdirSync(path.join(root, d), { withFileTypes: true })
   .flatMap((e) => (e.isDirectory() ? walk(`${d}/${e.name}`) : [`${d}/${e.name}`]));

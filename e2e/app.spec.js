@@ -1,4 +1,11 @@
 const { test, expect } = require("@playwright/test");
+const { AxeBuilder } = require("@axe-core/playwright");
+const fs = require("node:fs");
+const path = require("node:path");
+
+// Read from the source so a version bump does not need a matching edit here.
+const APP_VERSION = fs.readFileSync(path.resolve(__dirname, "../public/js/app.js"), "utf8")
+  .match(/const APP_VERSION = "([^"]+)"/)[1];
 
 /* Collects console errors, which fail the test. Requests to other origins are
    reported as warnings: avoiding them is a goal, not a hard limit. */
@@ -30,7 +37,7 @@ test("home opens in English with the 3D cube and no horizontal scroll", async ({
   await expect(page.getByRole("button", { name: "EN" })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByText("Let's go!")).toBeVisible();
   const credit = page.locator(".footer-credit");
-  await expect(credit).toHaveText("First Solve v1.01 by Kuba · tinkered.app · Privacy");
+  await expect(credit).toHaveText(`First Solve v${APP_VERSION} by Kuba · tinkered.app · Privacy`);
   await expect(credit.getByRole("link", { name: "Privacy" })).toHaveAttribute("href", "privacy.html");
   await expect(credit.getByRole("link", { name: "Kuba" })).toHaveAttribute("href", "mailto:kuba@tinkered.app");
   await expect(credit.getByRole("link", { name: "tinkered.app" })).toHaveAttribute("href", "https://tinkered.app");
@@ -174,6 +181,98 @@ test("the footer links to a privacy page that search engines skip", async ({ pag
   await expect(page.getByRole("heading", { name: "Algorithm cheat sheet" })).toBeVisible();
   expect(problems).toEqual([]);
 });
+
+test("the home page carries a link preview with a large image", async ({ page, request }) => {
+  await page.goto("/");
+  const meta = (name) => page.locator(`meta[property="${name}"], meta[name="${name}"]`);
+  await expect(meta("og:title")).toHaveAttribute("content", await page.title());
+  await expect(meta("og:description")).toHaveAttribute("content", await meta("description").getAttribute("content"));
+  await expect(meta("og:url")).toHaveAttribute("content", "https://firstsolve.tinkered.app/");
+  await expect(meta("twitter:card")).toHaveAttribute("content", "summary_large_image");
+
+  const image = new URL(await meta("og:image").getAttribute("content"));
+  expect(image.origin).toBe("https://firstsolve.tinkered.app");
+  const res = await request.get(image.pathname);
+  expect(res.headers()["content-type"]).toBe("image/png");
+  // Width and height sit at bytes 16 to 23 of a PNG.
+  const png = await res.body();
+  expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+});
+
+test("a fresh install opens every page offline, by either URL", async ({ page, context }) => {
+  const problems = watch(page);
+  await page.goto("/");
+  await cubeLoaded(page);
+
+  // Wait for the worker to control this page and to finish filling the cache, then cut the network.
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise((resolve) =>
+        navigator.serviceWorker.addEventListener("controllerchange", resolve, { once: true }));
+    }
+  });
+  const shellSize = fs.readFileSync(path.resolve(__dirname, "../public/sw.js"), "utf8")
+    .match(/^\s+"[^"]+",?$/gm).length;
+  await expect.poll(
+    () => page.evaluate(async () => {
+      const [name] = await caches.keys();
+      return name ? (await (await caches.open(name)).keys()).length : 0;
+    }),
+    { timeout: 15_000 }
+  ).toBeGreaterThanOrEqual(shellSize);
+
+  await context.setOffline(true);
+  try {
+    // The host redirects the .html forms to the clean URLs; offline, the worker has to map them.
+    for (const url of ["/", "/index.html"]) {
+      await page.goto(url);
+      await expect(page.getByText("Let's go!"), url).toBeVisible();
+      await cubeLoaded(page);
+    }
+    for (const url of ["/privacy", "/privacy.html"]) {
+      await page.goto(url);
+      await expect(page.getByRole("heading", { level: 1 }), url).toHaveText("Data and privacy");
+    }
+    await page.goto("/#/krok/white-cross");
+    await expect(page.locator("#view-lesson")).toBeVisible();
+    await cubeLoaded(page);
+  } finally {
+    await context.setOffline(false);
+  }
+  expect(problems).toEqual([]);
+});
+
+// The desktop and mobile projects cover both layouts; this covers both themes.
+for (const theme of ["light", "dark"]) {
+  test(`axe finds no accessibility violations in the ${theme} theme`, async ({ page }) => {
+    // Reduced motion stops the pulsing cards, so contrast is measured on the final colours.
+    await page.emulateMedia({ colorScheme: theme, reducedMotion: "reduce" });
+    // Every view is scanned before the assertion, so one run lists all violations.
+    const found = [];
+    const scan = async (view) => {
+      const { violations } = await new AxeBuilder({ page }).analyze();
+      for (const violation of violations)
+        for (const node of violation.nodes) found.push(`${view}: ${violation.id}: ${node.target.join(" ")}`);
+    };
+
+    await page.goto("/");
+    await cubeLoaded(page);
+    await expect(page.getByText("Let's go!")).toBeVisible();
+    await scan("home");
+    await page.goto("/#/krok/white-cross");
+    await expect(page.locator("#view-lesson")).toBeVisible();
+    await expect(page.locator("#lesson-text-pane h1, #lesson-text-pane h2").first()).toBeVisible();
+    await scan("lesson");
+    await page.goto("/#/sciaga");
+    await expect(page.getByRole("heading", { name: "Algorithm cheat sheet" })).toBeVisible();
+    await scan("cheat sheet");
+    await page.goto("/privacy");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Data and privacy");
+    await scan("privacy");
+    expect(found).toEqual([]);
+  });
+}
 
 test("the privacy page is sent with a noindex header", async ({ request }) => {
   const res = await request.get("/privacy");

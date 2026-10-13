@@ -4,11 +4,10 @@
    before the worker controls the page, so caching it "on first load" would
    leave a fresh install without the cube. CACHE carries APP_VERSION from
    js/app.js; bump both together (see AGENTS.md). */
-const CACHE = "first-solve-v1.00";
+const CACHE = "first-solve-v1.01";
 const SHELL = [
   "./",
-  "index.html",
-  "privacy.html",
+  "privacy",
   "css/fonts.css",
   "css/style.css",
   "fonts/atkinson-hyperlegible-next-latin.woff2",
@@ -59,6 +58,15 @@ self.addEventListener("activate", (e) => {
   );
 });
 
+/* The host redirects index.html to ./ and privacy.html to privacy, and a
+   redirected response cannot answer a navigation. So SHELL lists pages by
+   their clean URLs, and an offline visit to the .html form is looked up there. */
+function cleanUrl(url) {
+  const u = new URL(url);
+  u.pathname = u.pathname.replace(/(^|\/)index\.html$/, "$1").replace(/\.html$/, "");
+  return u.origin + u.pathname;
+}
+
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET" || new URL(req.url).origin !== self.location.origin) return;
@@ -72,7 +80,10 @@ self.addEventListener("fetch", (e) => {
         return res;
       })
       .catch(() =>
-        caches.match(req).then((hit) => hit || caches.match("index.html"))
+        caches
+          .match(req)
+          .then((hit) => hit || (req.mode === "navigate" ? caches.match(cleanUrl(req.url)) : undefined))
+          .then((hit) => hit || caches.match("./"))
       )
   );
 });

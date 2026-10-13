@@ -3,11 +3,11 @@
 ## Commands
 
 ```bash
-npm install                       # dev tooling only: wrangler, @playwright/test
+npm install                       # dev tooling only: wrangler, @playwright/test, @axe-core/playwright
 npx playwright install chromium   # once, before the first e2e run
 npm start                         # wrangler dev on http://localhost:8787, production headers
 npm test                          # scripts/check.js: syntax, PL/EN keys, SHELL and manifest files, version
-npm run test:e2e                  # Playwright, desktop and mobile, against npm start
+npm run test:e2e                  # Playwright, desktop and mobile, against npm start; includes an axe scan and an offline run
 npm run deploy                    # npm test, then wrangler deploy
 ```
 
@@ -42,7 +42,12 @@ npm run deploy                    # npm test, then wrangler deploy
   link in `app.js`, and test the cube in the home, lesson and cheat-sheet views.
 - **Service worker.** `public/sw.js` caches same-origin files only, network-first, and registers only
   on http(s). Every file a page loads goes in `SHELL`, the vendored cubing.js scripts included, so a
-  fresh install has the cube offline. `npm test` fails if one is missing.
+  fresh install has the cube offline. `npm test` fails if one is missing. Pages are listed by the URL
+  the host serves (`./`, `privacy`), never the `.html` form: the host redirects that form, and a cached
+  redirect cannot open a page offline. The fetch handler maps an offline `.html` visit to the clean URL.
+- **Link preview.** The `og:*` tags in `public/index.html` point to `public/icons/social-card.png`
+  (1200×630). They are static English with absolute URLs because crawlers do not run scripts; the
+  image is not in `SHELL` because no page loads it.
 - **Cube behavior is settled; do not touch it.** Cube rendering, cube states, algorithms, setup
   strings, stickering, per-orbit masks and the autoplay-loop logic in `public/js/steps.js`, plus the
   player wiring (`configurePlayer`, the autoplay loop, the hero loop) in `public/js/app.js`, are
