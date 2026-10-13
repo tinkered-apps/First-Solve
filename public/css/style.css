@@ -20,7 +20,7 @@
 
   --ink: #131418;
   --ink-2: #474b55;
-  --ink-3: #6c707a;
+  --ink-3: #5f636c;
   --line: #d3d6dc;
 
   --btn-bg: #141519;
@@ -31,7 +31,7 @@
   /* cube faces */
   --c-white: #f4f4f0;
   --c-yellow: #ffd500;
-  --c-red: #e0402f;
+  --c-red: #d23726; /* dark enough for white text at 4.5:1 */
   --c-orange: #ff8c1a;
   --c-blue: #2f6de0;
   --c-green: #2bb673;
