@@ -2,7 +2,22 @@
   <img src="public/icons/social-card.png" alt="The First Solve name next to one face of a cube, its stickers numbered 1 to 8 for the eight steps." width="760">
 </p>
 
-# First Solve
+<h1 align="center">First Solve</h1>
+
+<p align="center">
+  <b>Your first solved Rubik's Cube, one layer at a time.</b><br>
+  Eight steps, with a 3D cube that plays every move.
+</p>
+
+<p align="center">
+  <a href="https://firstsolve.tinkered.app/"><b>▶ Start the course</b></a>
+  &nbsp;·&nbsp; English and Polish
+  &nbsp;·&nbsp; installs as an app
+  &nbsp;·&nbsp; works offline
+  &nbsp;·&nbsp; no account
+</p>
+
+---
 
 An interactive course that teaches the beginner layer-by-layer Rubik's Cube solve in eight steps,
 with a live 3D cube instead of static diagrams. English by default, Polish behind the language
