@@ -22,3 +22,6 @@ playwright-report/
 
 # Legal audit working files
 .audyt-prawny/
+
+# Claude Code settings for this machine only
+.claude/settings.local.json
