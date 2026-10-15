@@ -4,7 +4,7 @@
    before the worker controls the page, so caching it "on first load" would
    leave a fresh install without the cube. CACHE carries APP_VERSION from
    js/app.js; bump both together (see AGENTS.md). */
-const CACHE = "first-solve-v1.02";
+const CACHE = "first-solve-v1.03";
 const SHELL = [
   "./",
   "privacy",

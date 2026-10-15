@@ -92,7 +92,7 @@ window.I18N_PL = {
   "intro.10.title": "D i B: dół i tył",
   "intro.10.body": "Te litery trafiają się rzadziej: <b>D</b> to dolna warstwa, a <b>B</b> ściana z tyłu. Zasada jest ta sama, ale kierunek zgodny z ruchem wskazówek zegara wyznaczaj tak, jakbyś patrzył na daną ścianę na wprost, a nie z boku czy przez środek kostki. Przykład:",
   "intro.11.title": "Czytamy szyfr!",
-  "intro.11.body": "Algorytm to algorytm zapisany literami, na przykład: R, U, R′, U′. Znasz już podstawy, czas zacząć układać kostkę!",
+  "intro.11.body": "Algorytm to przepis zapisany literami, na przykład: R, U, R′, U′. Znasz już podstawy, czas zacząć układać kostkę!",
 
   /* ---- krok 1: stokrotka ---- */
   "daisy.name": "Stokrotka",
