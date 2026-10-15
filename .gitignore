@@ -25,3 +25,6 @@ playwright-report/
 
 # Claude Code settings for this machine only
 .claude/settings.local.json
+
+# Marketing assets (HyperFrames video projects)
+.marketing/
