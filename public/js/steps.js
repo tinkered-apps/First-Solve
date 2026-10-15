@@ -214,8 +214,8 @@ const steps = [
       { key: "yellow-cross.2", alg: "", setup: DOT_CASE, stickering: "full" },
       /* 3. recipe + the line case */
       { key: "yellow-cross.3", alg: YC, setup: `${xinv(YC)} ${PCYC}`, stickering: "full", chips: true, autoplay: true },
-      /* 4. the L case (bend at back-left) */
-      { key: "yellow-cross.4", alg: `${YC} U2 ${YC}`, setup: `${xinv(`${YC} U2 ${YC}`)} ${PCYC}`, stickering: "full", autoplay: true },
+      /* 4. the L case (bend at back-left): one run gives a left-to-right line, the second the cross */
+      { key: "yellow-cross.4", alg: `${YC} ${YC}`, setup: `${xinv(`${YC} ${YC}`)} ${PCYC}`, stickering: "full", autoplay: true },
       /* 5. the dot case, full 3-round demo */
       { key: "yellow-cross.5", alg: `${YC} U2 ${YC} ${YC}`, setup: DOT_CASE, stickering: "full", autoplay: true }
     ]

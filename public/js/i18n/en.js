@@ -82,7 +82,7 @@ window.I18N_EN = {
   "intro.5.title": "The language of moves",
   "intro.5.body": "Every move has a letter, which says which face to turn: <b>U</b> is up, <b>D</b> down, <b>R</b> right, <b>L</b> left, <b>F</b> front, <b>B</b> back. Let's see them in action.",
   "intro.6.title": "U: the top layer",
-  "intro.6.body": "A plain letter means turn <b>clockwise</b>, looking straight at that face: for the top, that's a bird's-eye view, like a clock lying flat on a table. <b>U′</b> (U prime) with the tick means the other way, and <b>U2</b> means twice. The animation shows below combination:",
+  "intro.6.body": "A plain letter means turn <b>clockwise</b>, looking straight at that face: for the top, that's a bird's-eye view, like a clock lying flat on a table. <b>U′</b> (U prime) with the tick means the other way, and <b>U2</b> means twice. The animation shows U, then U′, then U2:",
   "intro.7.title": "R: the right face",
   "intro.7.body": "<b>R</b> turns the right face up and away from you, and <b>R′</b> brings it down towards you. Watch the cube do it.",
   "intro.8.title": "L: the left face",
@@ -92,7 +92,7 @@ window.I18N_EN = {
   "intro.10.title": "D and B: down and back",
   "intro.10.body": "You'll see these less often: <b>D</b> is the bottom layer and <b>B</b> is the face at the back. Same rule as always, but watch out: judge \"clockwise\" as if you'd turned the cube to look straight at that face, not from the side or through the cube.",
   "intro.11.title": "Reading the code!",
-  "intro.11.body": "An algorithm is a recipe written in letters, for example: R, U, R′, U′. You know the basics now, time to start solving the cube!",
+  "intro.11.body": "An algorithm is a recipe written in letters, for example: R, U, R′, U′. This one is the <b>corner inserter</b>, and you'll use it a lot. You know the basics now, time to start solving the cube!",
 
   /* ---- step 1: the daisy ---- */
   "daisy.name": "The daisy",
@@ -135,7 +135,7 @@ window.I18N_EN = {
   "white-corners.5.title": "Repeat until it clicks",
   "white-corners.5.body": "Sometimes you repeat the inserter 2, 3, even 5 times, and that's normal. Even a corner that starts out white-side straight up clicks in eventually. Here's one that needed three rounds. Patience pays off.",
   "white-corners.6.title": "A wrong corner stuck at the bottom",
-  "white-corners.6.body": "Sometimes a corner that doesn't belong is sitting at the bottom: its side colors don't match the faces around it, like on this cube. Turn the cube in your hands so that corner is at the <b>front-right</b>, and run the inserter once: it pops up top and becomes a normal top-layer corner, ready to place like any other.",
+  "white-corners.6.body": "Sometimes a corner that doesn't belong is sitting at the bottom: its side colors don't match the faces around it, like on this cube. Turn the cube in your hands so that corner is at the <b>front-right</b>, and run the inserter once: it pops up top and becomes a normal top-layer corner, ready to place like any other. The corner that drops into its place may land crooked. Handle it as on the previous slides.",
   "white-corners.7.title": "First layer done!",
   "white-corners.7.body": "Turn the cube white-side up: the whole face is white, and the top row of every side matches its center. First layer done! Turn it back <b>yellow-side up</b> and let's keep going.",
 
@@ -152,20 +152,20 @@ window.I18N_EN = {
   "middle-layer.5.title": "An edge stuck in the belt",
   "middle-layer.5.body": "Sometimes all four top edges are <b>yellow</b>, yet the belt still isn't done: an edge that belongs in the middle is stuck in the wrong spot, like on this cube. You'll spot it because its side color doesn't match the centers next to it.",
   "middle-layer.6.title": "Kick it out and keep looking",
-  "middle-layer.6.body": "Turn the top so <b>any</b> edge waits above the stuck slot. It doesn't matter which one, because it's just a crowbar. Run the &quot;going right&quot; recipe: the stuck edge pops up to the top, and a yellow one takes its place. Now look among the top edges for the one <b>without yellow</b>: that's the one that was just stuck. Place it the usual way.",
+  "middle-layer.6.body": "Hold the cube so the stuck slot is at the <b>front-right</b>. Whichever edge sits at the top front will do, because it's just a crowbar. Run the &quot;going right&quot; recipe: the stuck edge pops up to the top, and a yellow one takes its place. Now look among the top edges for the one <b>without yellow</b>: that's the one that was just stuck. Place it the usual way.",
   "middle-layer.7.title": "Two floors done!",
   "middle-layer.7.body": "The two bottom layers are done! Only the yellow top is left, and that's where the best tricks live. Ready?",
 
   /* ---- step 5: yellow cross ---- */
   "yellow-cross.name": "Yellow cross",
   "yellow-cross.1.title": "Goal: a yellow cross",
-  "yellow-cross.1.body": "We want a yellow <b>cross</b> on top: the center and the 4 edges next to it. Corners don't count, even if one already is yellow. We'll deal with corners later, so ignore them completely for now.",
+  "yellow-cross.1.body": "We want a yellow <b>cross</b> on top: the center and the 4 edges next to it. Corners don't count, even if one is already yellow. We'll deal with corners later, so ignore them completely for now.",
   "yellow-cross.2.title": "What do you see on top?",
   "yellow-cross.2.body": "Look straight down and count only the yellow squares next to the edges. Zero, like here, means a <b>dot</b>. Two side by side at a right angle form an <b>L</b>. Two facing each other in a row form a <b>line</b>. Four means the cross is done.",
   "yellow-cross.3.title": "The line",
-  "yellow-cross.3.body": "Each case can be solved using the algorithm below. Got a <b>line</b>? Turn the top until the line runs from left to right. Then use the recipe one to get cross.",
+  "yellow-cross.3.body": "Each case can be solved using the algorithm below. Got a <b>line</b>? Turn the top until the line runs from left to right, then run the recipe once to get the cross.",
   "yellow-cross.4.title": "The L",
-  "yellow-cross.4.body": "Turn the top layer until the <b>L</b> is in the top-left corner. Use algorithm <b>F R U R′ U′ F′</b> once - a <b>line</b> should appear. Follow instructions from the previous step to get a  <b>cross</b>.",
+  "yellow-cross.4.body": "Turn the top layer until the <b>L</b> is in the top-left corner. Use algorithm <b>F R U R′ U′ F′</b> once: a <b>line</b> should appear. Then follow the previous slide to get a <b>cross</b>.",
   "yellow-cross.5.title": "The dot",
   "yellow-cross.5.body": "Use the algorithm <b>F R U R′ U′ F′</b> three times. Run 1 gives you an <b>L.</b> Run 2 gives you a <b>line</b> and run 3 a final <b>cross</b> - we discussed detailed instructions for L and line a moment ago.",
 
@@ -174,7 +174,7 @@ window.I18N_EN = {
   "yellow-edges.1.title": "Cross yes, colors no",
   "yellow-edges.1.body": "The yellow cross is there, but the edges' <b>side colors</b> don't match the centers yet. Spin the top and see how many line up. Usually, one or two will.",
   "yellow-edges.2.title": "The edge swap",
-  "yellow-edges.2.body": "If two edges match, turn the whole cube to put them at the back and right. Use the algorithm, turn the top to check alignment again. Repeat until all four edges match. You may need up to three runs.",
+  "yellow-edges.2.body": "If two edges match, turn the whole cube to put them at the back and right. Use the algorithm, turn the top to check alignment again. Repeat until all four edges match. You may need up to three runs. If the two matching edges sit opposite each other, run the algorithm once from any side and check again: you'll get two neighbours.",
   "yellow-edges.3.title": "Edges done!",
   "yellow-edges.3.body": "All four side colors of the cross match their centers? Beautiful. Just <b>four corners</b> left.",
 

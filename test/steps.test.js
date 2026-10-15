@@ -345,6 +345,11 @@ test("yellow cross: the line and the L start with two yellow edges, and every ca
   const bend = yellowOnTop(startOf("yellow-cross.4"));
   assert.equal(bend.filter(Boolean).length, 2);
   assert.ok(bend[0] !== bend[2] && bend[1] !== bend[3], "the L case is not an L");
+  /* The text puts the L at the back and left; one run then leaves a left-to-right line. */
+  assert.deepEqual(bend, [false, false, true, true], "the L is not at the back-left");
+  const afterOne = yellowOnTop(apply(slide("yellow-cross.3").alg, startOf("yellow-cross.4")));
+  assert.deepEqual(afterOne, [false, true, false, true], "one run from the L does not give a left-to-right line");
+  assert.equal(slide("yellow-cross.4").alg, `${slide("yellow-cross.3").alg} ${slide("yellow-cross.3").alg}`, "the L demo is not two plain runs");
 
   for (const k of ["yellow-cross.3", "yellow-cross.4", "yellow-cross.5"]) {
     const end = endOf(k);
