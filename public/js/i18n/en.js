@@ -92,7 +92,7 @@ window.I18N_EN = {
   "intro.10.title": "D and B: down and back",
   "intro.10.body": "You'll see these less often: <b>D</b> is the bottom layer and <b>B</b> is the face at the back. Same rule as always, but watch out: judge \"clockwise\" as if you'd turned the cube to look straight at that face, not from the side or through the cube.",
   "intro.11.title": "Reading the code!",
-  "intro.11.body": "An algorithm is a recipe written in letters, for example: R, U, R′, U′, and watch the cube. That's it. You can read moves now and can start building the cube!",
+  "intro.11.body": "An algorithm is a recipe written in letters, for example: R, U, R′, U′. You know the basics now, time to start solving the cube!",
 
   /* ---- step 1: the daisy ---- */
   "daisy.name": "The daisy",
