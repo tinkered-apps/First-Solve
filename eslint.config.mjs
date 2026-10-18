@@ -5,8 +5,8 @@ import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
-  // public/vendor/ is cubing.js, copied in as released.
-  { ignores: ['node_modules/', 'test-results/', 'playwright-report/', '.wrangler/', 'public/vendor/'] },
+  // public/vendor/ is cubing.js, copied in as released; .marketing/ holds local, git-ignored promo work.
+  { ignores: ['node_modules/', 'test-results/', 'playwright-report/', '.wrangler/', '.marketing/', 'public/vendor/'] },
 
   js.configs.recommended,
   {
